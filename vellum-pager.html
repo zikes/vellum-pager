@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 
 <!--
 A pagination control.
@@ -16,6 +17,9 @@ With initial page and distance set:
 -->
 <dom-module id="vellum-pager">
   <style>
+    :host {
+      display: inline-block;
+    }
     ul {
       display: inline-block;
       position: relative;
@@ -49,6 +53,11 @@ With initial page and distance set:
   </style>
 
   <template>
+    <iron-a11y-keys target="{{}}" keys="home end left right" on-keys-pressed="_setFocus"></iron-a11y-keys>
+    <iron-a11y-keys target="{{}}" keys="home" on-keys-pressed="first"></iron-a11y-keys>
+    <iron-a11y-keys target="{{}}" keys="end" on-keys-pressed="last"></iron-a11y-keys>
+    <iron-a11y-keys target="{{}}" keys="left" on-keys-pressed="prev"></iron-a11y-keys>
+    <iron-a11y-keys target="{{}}" keys="right" on-keys-pressed="next"></iron-a11y-keys>
     <ul>
       <template is="dom-repeat" items="{{numbers}}">
         <li class$="{{item.classed}}">
@@ -109,6 +118,7 @@ With initial page and distance set:
         this.push('numbers', this._buildNum(x));
       }
       this.page = this.page || 1;
+      this.setAttribute('tabindex', 0);
     },
 
     _buildNum: function(num) {
@@ -184,6 +194,10 @@ With initial page and distance set:
       this.fire('page', this.page);
     },
 
+    _setFocus: function(event){
+      this.focus();
+    },
+
     /**
      * The `page` event is fired whenever the page number is changed.
      *
@@ -214,6 +228,22 @@ With initial page and distance set:
      */
     prev: function() {
       this.page--;
+      this.fire('page', this.page);
+    },
+
+    /**
+     * Go to the first page.
+     */
+    first: function() {
+      this.page = 1;
+      this.fire('page', this.page);
+    },
+
+    /**
+     * Go to the last page.
+     */
+    last: function() {
+      this.page = this.pages;
       this.fire('page', this.page);
     },
 
