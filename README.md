@@ -30,3 +30,14 @@ A pagination control.
 ```
 
 ![bound-page](./screenshots/bound-page.png)
+
+## Arrows
+
+```
+<template is="dom-bind">
+  <vellum-pager just-arrows pages="100" page="{{page}}"></vellum-pager>
+  <p>Current page: <strong>{{page}}</strong></p>
+</template>
+```
+
+![arrows](./screenshots/arrows.png)
