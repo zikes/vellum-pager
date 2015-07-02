@@ -41,3 +41,11 @@ A pagination control.
 ```
 
 ![arrows](./screenshots/arrows.png)
+
+## a11y
+
+The host element is focusable (as well as the clickable links) and as long as
+the component has focus you can navigate with `left` and `right` arrow keys and
+use `home` and `end` to go to the first and last pages.
+
+![a11y](./screenshots/a11y.png)
