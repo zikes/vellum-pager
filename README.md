@@ -12,7 +12,7 @@ A pagination control.
 
 ![basic](./screenshots/basic.png)
 
-## Custom Distance:
+## Custom Distance
 
 ```
 <vellum-pager distance="5" pages="100"></vellum-pager>
@@ -20,7 +20,7 @@ A pagination control.
 
 ![distance](./screenshots/distance.png)
 
-## Bound Page:
+## Bound Page
 
 ```
 <template is="dom-bind">
