@@ -1,0 +1,23 @@
+{
+  "name": "vellum-pager",
+  "version": "1.0.0",
+  "description": "A pagination control.",
+  "keywords": [
+    "web-component",
+    "polymer"
+  ],
+  "main": "vellum-pager.html",
+  "homepage": "https://git.samsatlas.com/AtlasElements/vellum-pager",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

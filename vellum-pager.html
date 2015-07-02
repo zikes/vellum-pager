@@ -1,0 +1,222 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+A pagination control.
+
+Examples:
+
+    <vellum-pager pages="50"></vellum-pager>
+
+With initial page and distance set:
+
+    <vellum-pager page="5" pages="10" distance="3"></vellum-pager>
+
+@demo demo/index.html
+-->
+<dom-module id="vellum-pager">
+  <style>
+    ul {
+      display: inline-block;
+      position: relative;
+      border-radius: 4px;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      display: inline;
+    }
+    li.active>a {
+      font-weight: 500 !important;
+      background: var(--google-grey-100);
+    }
+    li.buffer>a {
+      cursor: default;
+    }
+    li.buffer+li.buffer {
+      display: none;
+    }
+    li>a {
+      color: #000;
+      position: relative;
+      float: left;
+      padding: 6px 12px;
+      margin-left: -1px;
+      line-height: 1.42857143;
+      text-decoration: none;
+      @apply(--paper-font-body1);
+    }
+  </style>
+
+  <template>
+    <ul>
+      <template is="dom-repeat" items="{{numbers}}">
+        <li class$="{{item.classed}}">
+          <a href="#" on-click="_paged">{{item.display}}</a>
+        </li>
+      </template>
+    </ul>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'vellum-pager',
+
+    properties: {
+      /**
+       * The total number of pages.
+       */
+      pages: {
+        value: 1,
+        type: Number,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_updatePages'
+      },
+
+      /**
+       * The current page.
+       */
+      page: {
+        value: 1,
+        type: Number,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_updatePage'
+      },
+
+      /**
+       * Number of pages to render on each side of current.
+       */
+      distance: {
+        value: 2,
+        type: Number,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_updateDistance'
+      },
+    },
+
+    observers: [
+      '_updateNumbers(page, pages, distance)'
+    ],
+
+    ready: function() {
+      this.numbers = [];
+      for(var x = 1; x <= this.pages; x++) {
+        this.push('numbers', this._buildNum(x));
+      }
+      this.page = this.page || 1;
+    },
+
+    _buildNum: function(num) {
+      return {
+        page: num,
+        display: (this._isBuffer(num) ? '...' : num),
+        classed: [
+          (this._isBuffer(num) ? 'buffer' : ''),
+          (num === this.page ? 'active' : '')
+        ].join(''),
+        buffer: this._isBuffer(num),
+        active: num === this.page
+      };
+    },
+
+    _isBuffer: function(num) {
+      return !(
+        num === 1
+        ||
+        num === this.pages
+        ||
+        Math.abs(this.page - num) <= this.distance
+        ||
+        (this.page - (this.distance+1) === 2 && num === 2)
+        ||
+        (this.page + (this.distance+1) === this.pages - 1 && num === this.pages - 1)
+      );
+    },
+
+    _updatePages: function(newPages) {
+      if(this.numbers === undefined) return;
+      if(newPages > this.numbers.length) {
+        for(var x = this.numbers.length+1; x <= newPages; x++) {
+          this.push('numbers', this._buildNum(x));
+        }
+      } else {
+        this.splice('numbers', newPages, this.numbers.length-newPages || 0);
+      }
+      if(this.page > newPages) {
+        this.page = newPages;
+      } else {
+        this._updateNumbers();
+      }
+    },
+    _updatePage: function(newPage, oldPage) {
+      if(this.numbers === undefined) return;
+      if(newPage < 1) this.page = 1;
+      if(newPage > this.pages) this.page = this.pages;
+      this._updateNumbers();
+    },
+    _updateDistance: function() {
+      if(this.numbers === undefined) return;
+      this._updateNumbers();
+    },
+    _updateNumbers: function() {
+      if(this.numbers === undefined) return;
+      for(var x = 1; x <= this.pages; x++) {
+        this.set('numbers.'+(x-1)+'.display', this._isBuffer(x) ? '...' : x);
+        this.set('numbers.'+(x-1)+'.classed', [
+          (this._isBuffer(x) ? 'buffer' : ''),
+          (this.page === x ? 'active' : '')
+        ].join(''));
+        this.set('numbers.'+(x-1)+'.active', this.page === x);
+        this.set('numbers.'+(x-1)+'.buffer', this._isBuffer(x));
+      }
+    },
+
+    _paged: function(event, detail, sender) {
+      if(event) event.preventDefault();
+      if(this.numbers === undefined) return;
+      if(event.model.item.buffer) return;
+      this.page = event.model.item.page;
+      this.fire('page', this.page);
+    },
+
+    /**
+     * The `page` event is fired whenever the page number is changed.
+     *
+     * @event page
+     * @detail pageNumber
+     */
+
+    /**
+     * Set the current page.
+     *
+     * @param {number} Page to set.
+     */
+    go: function(num) {
+      this.page = num;
+      this.fire('page', this.page);
+    },
+
+    /**
+     * Go to the next page.
+     */
+    next: function() {
+      this.page++;
+      this.fire('page', this.page);
+    },
+
+    /**
+     * Go to the previous page.
+     */
+    prev: function() {
+      this.page--;
+      this.fire('page', this.page);
+    },
+
+  });
+
+</script>
