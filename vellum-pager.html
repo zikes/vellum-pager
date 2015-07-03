@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
 <link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <!--
 A pagination control.
@@ -59,10 +61,16 @@ With initial page and distance set:
     <iron-a11y-keys target="{{}}" keys="left" on-keys-pressed="prev"></iron-a11y-keys>
     <iron-a11y-keys target="{{}}" keys="right" on-keys-pressed="next"></iron-a11y-keys>
     <ul>
-      <template is="dom-repeat" items="{{numbers}}">
-        <li class$="{{item.classed}}">
-          <a href="#" on-tap="_paged">{{item.display}}</a>
-        </li>
+      <template is="dom-if" if="{{justArrows}}">
+        <li><iron-icon tabindex="0" icon="chevron-left" on-tap="prev"></iron-icon></li>
+        <li><iron-icon tabindex="0" icon="chevron-right" on-tap="next"></iron-icon></li>
+      </template>
+      <template is="dom-if" if="{{!justArrows}}">
+        <template is="dom-repeat" items="{{numbers}}">
+          <li class$="{{item.classed}}">
+            <a href="#" on-tap="_paged">{{item.display}}</a>
+          </li>
+        </template>
       </template>
     </ul>
   </template>
@@ -106,6 +114,14 @@ With initial page and distance set:
         reflectToAttribute: true,
         observer: '_updateDistance'
       },
+
+      /**
+       * If true, the control will show arrows instead of numbers.
+       */
+      justArrows: {
+        value: false,
+        type: Boolean
+      }
     },
 
     observers: [
