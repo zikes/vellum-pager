@@ -76,7 +76,16 @@ With initial page and distance set:
         <li><paper-icon-button icon="vellum-pager-icons:first" on-tap="first" alt="First" id="firstButton"></paper-icon-button></li>
         <li><paper-icon-button icon="chevron-left" on-tap="prev" alt="Previous" id="prevButton"></paper-icon-button></li>
         <template is="dom-if" if="{{showCurrent}}">
-          <li class="current"><a>{{page}}</a></li>
+          <li class="current">
+            <a>
+              <template is="dom-if" if="{{showTotal}}">
+                <span>{{page}}</span>/<span>{{pages}}</span>
+              </template>
+              <template is="dom-if" if="{{!showTotal}}">
+                <span>{{page}}</span>
+              </template>
+            </a>
+          </li>
         </template>
         <li><paper-icon-button icon="chevron-right" on-tap="next" alt="Next"  id="nextButton"></paper-icon-button></li>
         <li><paper-icon-button icon="vellum-pager-icons:last" on-tap="last" alt="Last" id="lastButton"></paper-icon-button></li>
@@ -155,6 +164,15 @@ With initial page and distance set:
       skipDistance: {
         value: 10,
         type: Number
+      },
+      
+      /**
+       * Include the total number of pages with current.  Only
+       * applicable if showCurrent is also true.
+       */
+      showTotal: {
+        value: false,
+        type: Boolean
       }
     },
 

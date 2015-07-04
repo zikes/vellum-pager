@@ -35,9 +35,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p>Current page: <strong>{{page}}</strong></p>
     </template>
     <p>Arrows w/Current:</p>
-    <template is="dom-bind">
-      <vellum-pager just-arrows show-current pages="100" page="{{page}}"></vellum-pager>
-      <p>Current page: <strong>{{page}}</strong></p>
-    </template>
+    <vellum-pager just-arrows show-current pages="100" page="{{page}}"></vellum-pager>
+    <p>Arrows w/Current &amp; Total:</p>
+    <vellum-pager just-arrows show-current show-total pages="100" page="{{page}}"></vellum-pager>
   </body>
 </html>
