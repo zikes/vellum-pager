@@ -46,6 +46,8 @@ A pagination control.
 
 The host element is focusable (as well as the clickable links) and as long as
 the component has focus you can navigate with `left` and `right` arrow keys and
-use `home` and `end` to go to the first and last pages.
+use `home` and `end` to go to the first and last pages. In addition, `pageup`
+and `pagedown` can be used to skip large numbers of pages, determined by the
+`skipDistance` property (default 10).
 
 ![a11y](./screenshots/a11y.png)
