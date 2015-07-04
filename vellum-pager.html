@@ -227,7 +227,7 @@ With initial page and distance set:
       if(this.numbers === undefined) return;
       if(event.model.item.buffer) return;
       this.page = event.model.item.page;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
     _setFocus: function(event){
@@ -235,9 +235,9 @@ With initial page and distance set:
     },
 
     /**
-     * The `page` event is fired whenever the page number is changed.
+     * The `vellum-page-changed` event is fired whenever the page number is changed.
      *
-     * @event page
+     * @event vellum-page-changed
      * @detail pageNumber
      */
 
@@ -248,7 +248,7 @@ With initial page and distance set:
      */
     go: function(num) {
       this.page = num;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
     /**
@@ -256,7 +256,7 @@ With initial page and distance set:
      */
     next: function() {
       this.page++;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
     /**
@@ -264,7 +264,7 @@ With initial page and distance set:
      */
     prev: function() {
       this.page--;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
     /**
@@ -272,7 +272,7 @@ With initial page and distance set:
      */
     first: function() {
       this.page = 1;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
     /**
@@ -280,7 +280,7 @@ With initial page and distance set:
      */
     last: function() {
       this.page = this.pages;
-      this.fire('page', this.page);
+      this.fire('vellum-page-changed', this.page);
     },
 
   });
