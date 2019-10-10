@@ -1,9 +1,8 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-styles/paper-styles.html">
-<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="vellum-pager-icons.html">
 
@@ -64,13 +63,6 @@ With initial page and distance set:
   </style>
 
   <template>
-    <iron-a11y-keys target="{{}}" keys="home end left right pageup pagedown" on-keys-pressed="_setFocus"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="home" on-keys-pressed="first"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="end" on-keys-pressed="last"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="left" on-keys-pressed="prev"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="right" on-keys-pressed="next"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="pagedown" on-keys-pressed="skipPrev"></iron-a11y-keys>
-    <iron-a11y-keys target="{{}}" keys="pageup" on-keys-pressed="skipNext"></iron-a11y-keys>
     <ul>
       <template is="dom-if" if="{{justArrows}}">
         <li><paper-icon-button icon="vellum-pager-icons:first" on-tap="first" alt="First" id="firstButton"></paper-icon-button></li>
@@ -156,7 +148,7 @@ With initial page and distance set:
         value: false,
         type: Boolean
       },
-      
+
       /**
        * When skipping large numbers of pages, this determines how
        * many pages to skip.
@@ -165,7 +157,7 @@ With initial page and distance set:
         value: 10,
         type: Number
       },
-      
+
       /**
        * Include the total number of pages with current.  Only
        * applicable if showCurrent is also true.
